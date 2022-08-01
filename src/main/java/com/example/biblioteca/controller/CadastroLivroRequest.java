@@ -1,11 +1,10 @@
-package com.example.biblioteca.request;
+package com.example.biblioteca.controller;
 
 import lombok.Data;
 
 @Data
-public class LivroRequest {
+public class CadastroLivroRequest {
 
     private String nome;
     private String autor;
-
 }

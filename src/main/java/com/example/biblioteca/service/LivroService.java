@@ -18,7 +18,8 @@ public class LivroService {
     }
 
     public List<Livro> findAll() {
-        return livroRepository.findAll();
+        //return livroRepository.findAll();
+        return livroRepository.findByOrderByNomeAsc();
     }
 
     public Livro findById(Long id) {
@@ -27,5 +28,9 @@ public class LivroService {
 
     public Livro update(Livro livro) {
         return livroRepository.save(livro);
+    }
+
+    public void delete(Long id) {
+        livroRepository.deleteById(id);
     }
 }
