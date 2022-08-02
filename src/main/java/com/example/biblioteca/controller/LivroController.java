@@ -18,6 +18,14 @@ import java.util.List;
 @RequestMapping("/livros")
 public class LivroController {
 
+   // 200 - OK
+   // 201 - Created
+   // 204 - NoContent
+   // 400 - BadRequest
+   // 404 - NotFound
+   // 403 - ForBidden
+   // 500 - Internal Server Error
+
    // @Autowired
    private LivroService livroService;
 
@@ -32,45 +40,71 @@ public class LivroController {
    }
 
    @PostMapping
-   public LivroResponse save(@RequestBody LivroSaveRequest livroSaveRequest){
+   public ResponseEntity<LivroResponse> save(@RequestBody LivroSaveRequest livroSaveRequest){
+      try {
          Livro livro = livroConverter.convertToLivro(livroSaveRequest);
 
          Livro livroSalvo = livroService.save(livro);
 
          LivroResponse livroResponse = livroConverter.convertToLivroResponse(livroSalvo);
 
-         return livroResponse;
+         return ResponseEntity.created(
+                 new URI("http://localhost:8080/biblioteca/livros/" + livroResponse.getId())).build();
+      }catch (Exception e){
+         return ResponseEntity.internalServerError().build();
+      }
    }
 
    @PutMapping
-   public Livro update(@RequestBody LivroUpdateResquest livroUpdateResquest){
-      Livro livro  = livroConverter.convertToLivro(livroUpdateResquest);
+   public ResponseEntity<LivroResponse> update(@RequestBody LivroUpdateResquest livroUpdateResquest){
+      try {
+         Livro livro  = livroConverter.convertToLivro(livroUpdateResquest);
 
-      Livro livroAlterado = livroService.update(livro);
+         Livro livroAlterado = livroService.update(livro);
 
-      LivroResponse livroResponse = livroConverter.convertToLivroResponse(livroAlterado);
+         LivroResponse livroResponse = livroConverter.convertToLivroResponse(livroAlterado);
 
-      return livroAlterado;
+         return ResponseEntity.ok().build();
+
+      }catch (Exception e){
+         return ResponseEntity.internalServerError().build();
+      }
    }
 
    @GetMapping
-   public List<LivroResponse> findAll(){
-      List<Livro> livros = livroService.findAll();
+   public ResponseEntity<List<LivroResponse>> findAll(){
+      try {
+         List<Livro> livros = livroService.findAll();
 
-      List<LivroResponse> livrosResponse = livroConverter.convertToListLivroResponse(livros);
+         List<LivroResponse> livrosResponse = livroConverter.convertToListLivroResponse(livros);
 
-      return livrosResponse;
+         return ResponseEntity.ok(livrosResponse);
+
+      } catch (Exception e){
+         return ResponseEntity.internalServerError().build();
+      }
    }
 
    @GetMapping("/{id}")
-   public LivroResponse findById(@PathVariable Long id){
-      Livro livro = livroService.findById(id);
-      LivroResponse livroResponse = livroConverter.convertToLivroResponse(livro);
-      return livroResponse;
+   public ResponseEntity<LivroResponse> findById(@PathVariable Long id){
+      try {
+         Livro livro = livroService.findById(id);
+
+         LivroResponse livroResponse = livroConverter.convertToLivroResponse(livro);
+
+         return ResponseEntity.ok(livroResponse);
+      }catch (Exception e){
+         return ResponseEntity.internalServerError().build();
+      }
    }
 
    @DeleteMapping("/{id}")
-   public void delete(@PathVariable Long id){
-      livroService.delete(id);
+   public ResponseEntity<?> delete(@PathVariable Long id){
+      try {
+         livroService.delete(id);
+         return ResponseEntity.ok().build();
+      }catch (Exception e){
+         return ResponseEntity.internalServerError().build();
+      }
    }
 }
