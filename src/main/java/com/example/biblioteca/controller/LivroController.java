@@ -1,6 +1,7 @@
 package com.example.biblioteca.controller;
 
 import com.example.biblioteca.converter.LivroConverter;
+import com.example.biblioteca.exception.LivroException;
 import com.example.biblioteca.model.Livro;
 import com.example.biblioteca.request.LivroSaveRequest;
 import com.example.biblioteca.request.LivroUpdateResquest;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -48,9 +51,17 @@ public class LivroController {
 
          LivroResponse livroResponse = livroConverter.convertToLivroResponse(livroSalvo);
 
+         UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                 .scheme("http").host("localhost:8080")
+                 .path("/biblioteca").path("/livros/"+livroResponse.getId()).build();
+
          return ResponseEntity.created(
-                 new URI("http://localhost:8080/biblioteca/livros/" + livroResponse.getId())).build();
-      }catch (Exception e){
+                 new URI(uriComponents.toUriString())).build();
+
+      } catch (LivroException e){
+         return ResponseEntity.badRequest().build();
+
+      } catch (Exception e){
          return ResponseEntity.internalServerError().build();
       }
    }
@@ -93,7 +104,11 @@ public class LivroController {
          LivroResponse livroResponse = livroConverter.convertToLivroResponse(livro);
 
          return ResponseEntity.ok(livroResponse);
-      }catch (Exception e){
+
+      } catch (LivroException e){
+         return ResponseEntity.noContent().build();
+
+      } catch (Exception e){
          return ResponseEntity.internalServerError().build();
       }
    }
