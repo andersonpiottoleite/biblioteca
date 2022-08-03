@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem</title>
+</head>
+<body>
+
+<h1>Listagem de Alunos</h1>
+
+<table border="1px solid">
+    <thead>
+        <tr>
+            <th th:text="Nome"></th>
+            <th th:text="Idade"></th>
+            <th th:text="Maior"></th>
+            <th th:text="Matricula"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="aluno : ${alunos}">
+            <td th:text="${aluno.nome}"></td>
+            <td th:text="${aluno.idade}"></td>
+            <td>
+                <span th:if="${aluno.idade} > 18" th:text="SIM" />
+                <span th:unless="${aluno.idade} > 18" th:text="NÂO" />
+            </td>
+            <td th:switch="${aluno.tipoMatricula.name}">
+                <span th:case="'BOLSA'" th:text="BOLSA" />
+                <span th:case="'PAGA'" th:text="PAGA" />
+                <span th:case="'ENEM'" th:text="ENEM" />
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -19,16 +19,17 @@ public class AlunoController {
 
     @Autowired
     private AlunoService alunoService;
-
+    // 1 - http://localhost:8080/biblioteca/aluno/form
     @GetMapping("form")
-    public String getFormCadastro(Model model){
-        model.addAttribute("alunoRequest", new AlunoSaveRequest());
+    public String getFormCadastro(/*Model model*/){
+        //model.addAttribute("alunoRequest", new AlunoSaveRequest());
         return "cadastro-aluno";
     }
 
 
+    // 2
     @PostMapping("cadastrar")
-    public String cadastroAluno(@ModelAttribute AlunoSaveRequest alunoRequest, Model model){
+    public String cadastroAluno(/*@ModelAttribute */AlunoSaveRequest alunoRequest, Model model){
 
         Aluno aluno = new Aluno();
         aluno.setNome(alunoRequest.getNome());

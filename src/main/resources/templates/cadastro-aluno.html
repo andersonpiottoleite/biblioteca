@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro Aluno</title>
+</head>
+<body>
+    <h1>Cadastro de Alunos</h1>
+    <form action="cadastrar" method="post">
+        <div>
+            <label for="idNome">Nome</label>
+            <input type="text" id="idNome" name="nome"></input>
+        </div>
+        </br>
+        <div>
+            <label for="idIdade">Idade</label>
+            <input type="text" id="idIdade" name="idade"></input>
+        </div>
+        </br>
+        <div>
+            <label for="idTipoMatricula">Tipo Matricula</label>
+            <select name="tipoMatricula" id="idTipoMatricula">
+                <option value="ENEM">ENEM</option>
+                <option value="BOLSA">BOLSA</option>
+                <option value="PAGA">PAGA</option>
+            </select>
+        </div>
+        </br>
+        <div>
+            <input type="submit" value="Cadastrar">
+        </div>
+
+    </form>
+</body>
+</html>
