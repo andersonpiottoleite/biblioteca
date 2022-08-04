@@ -2,8 +2,8 @@ package com.example.biblioteca.enumeracao;
 
 public enum TipoMatriculaEnum {
 
-    PAGA,
-    ENEM,
-    BOLSA;
+    PAGA, //0
+    ENEM, //1
+    BOLSA; //2
 
 }

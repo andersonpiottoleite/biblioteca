@@ -6,20 +6,20 @@
 </head>
 <body>
     <h1>Cadastro de Alunos</h1>
-    <form action="cadastrar" method="post">
+    <form th:object="${alunoRequest}" action="cadastrar" method="post">
         <div>
-            <label for="idNome">Nome</label>
-            <input type="text" id="idNome" name="nome"></input>
+            <label for="nome">Nome</label>
+            <input th:field="*{nome}"/>
         </div>
         </br>
         <div>
-            <label for="idIdade">Idade</label>
-            <input type="text" id="idIdade" name="idade"></input>
+            <label for="idade">Idade</label>
+            <input th:field="*{idade}"/>
         </div>
         </br>
         <div>
-            <label for="idTipoMatricula">Tipo Matricula</label>
-            <select name="tipoMatricula" id="idTipoMatricula">
+            <label for="tipoMatricula">Tipo Matricula</label>
+            <select th:field="*{tipoMatricula}" id="tipoMatricula">
                 <option value="ENEM">ENEM</option>
                 <option value="BOLSA">BOLSA</option>
                 <option value="PAGA">PAGA</option>
